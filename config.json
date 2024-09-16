@@ -1,0 +1,7 @@
+{
+    "username": "user",
+    "hostname": "localhost",
+    "vfs_path": "virtual_filesystem.tar",
+    "log_path": "log.xml",
+    "startup_script": "start_script.sh"
+}
