@@ -11,7 +11,6 @@ class ShellEmulator:
         self.hostname = config['hostname']
         self.vfs_path = config['vfs_path']
         self.log_path = config['log_path']
-
         self.startup_script = config['startup_script']
         self.current_directory = "vfs"
         self.commands = {
@@ -45,9 +44,6 @@ class ShellEmulator:
         self.log_action("ls")
 
     def cd(self, path):
-        # Проверка на существование директории
-
-
         with tarfile.open(self.vfs_path) as tar:
             if any(member.name == (self.current_directory + '/' + path) for member in tar.getmembers() if
                    member.isdir()):
@@ -65,8 +61,7 @@ class ShellEmulator:
         exit(0)
 
     def rmdir(self, path):
-        # Удаление директории (фактически просто логическое действие, так как мы не можем изменять tar файл)
-        print(f"Удаление директории '{os.path.join(self.current_directory, path)}' невозможно (Нельзя изменять tar файл).")
+        print("Удаление директории '" + path +"' невозможно (Нельзя изменять tar файл).")
 
     def tree(self):
         with tarfile.open(self.vfs_path) as tar:
@@ -92,7 +87,6 @@ class ShellEmulator:
                     self.commands[cmd_name]()
             else:
                 print(f"Команда '{cmd_name}' не найдена.")
-
 
 if __name__ == "__main__":
     with open('config.json') as f:
