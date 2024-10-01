@@ -1,14 +1,12 @@
 ## Описание
 
-Shell Emulator — это простая эмуляция командной строки, которая позволяет взаимодействовать с виртуальной файловой системой (VFS) в формате tar. Пользователи могут выполнять основные команды, такие как ls, cd, rmdir, и tree, а также получать журнал действий, записываемый в формате XML.
+Shell Emulator — это простой эмулятор командной строки, который позволяет взаимодействовать с виртуальной файловой системой (VFS) в формате tar. Пользователи могут выполнять основные команды, такие как ls, cd, rmdir, и tree, а также получать журнал действий, записываемый в формате XML.
 
 ## Установка
 
 1. Убедитесь, что у вас установлен Python 3.x.
-2. Скопируйте код в файл, например, shell_emulator.py.
-3. Создайте файл конфигурации JSON, например, config.json, с необходимыми параметрами:
+2. Создайте файл конфигурации JSON, например, config.json, с необходимыми параметрами:
 
-json
 {
     "username": "username",
     "hostname": "hostname",
@@ -17,11 +15,8 @@ json
     "startup_script": "script"
 }
 
-
-4. Запустите эмулятор:
-
-bash
-python shell_emulator.py
+3. В случае отсутствия виртуальной файловой системы в формате tar, вы можете воспользоваться VirtCreator.py для быстрового создания примера виртуальной файловой системы, с которой можно работать.
+4. Запустите emulator.py
 
 ## Использование
 После запуска эмулятора вы можете вводить команды в командной строке:
@@ -37,18 +32,26 @@ python shell_emulator.py
 
 ## Пример использования
 
-$ ls
-dir1/
-dir2/
-file.txt
-$ cd dir1
-$ tree
-dir1/
-    subdir1/
+user@localhost:vfs$ ls
+vfs
+vfs/dir1
+vfs/dir1/file3.txt
+vfs/dir2
+vfs/file1.txt
+vfs/file2.txt
+user@localhost:vfs$ cd dir1
+user@localhost:vfs/dir1$ cd vfs
+user@localhost:vfs$ tree
+vfs/
+    dir1/
+        file3.txt
+    dir2/
     file1.txt
-$ rmdir subdir1
-$ exit
+    file2.txt
+user@localhost:vfs$ exit
+Выход...
 
+Кроме этого, можно воспользоваться tests1.py для запуска заранее заготовленных тестов
 ## Зависимости
 - Python 3.x
 - Стандартные библиотеки: os, tarfile, json, xml.etree.ElementTree, datetime, pytest
