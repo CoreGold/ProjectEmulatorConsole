@@ -16,6 +16,10 @@ def VFSCreation():
     with tarfile.open('virtual_filesystem.tar', 'w') as tar:
         tar.add('vfs', arcname=os.path.basename('vfs'))
 
-    os.remove('vfs')
-
+    os.remove('vfs/file1.txt')
+    os.remove('vfs/file2.txt')
+    os.remove('vfs/dir1/file3.txt')
+    os.rmdir('vfs/dir1')
+    os.rmdir('vfs/dir2')
+    os.rmdir('vfs')
 VFSCreation()
