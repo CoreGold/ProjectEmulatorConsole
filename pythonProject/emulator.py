@@ -61,7 +61,30 @@ class ShellEmulator:
         exit(0)
 
     def rmdir(self, path):
-        print("Удаление директории '" + path +"' невозможно (Нельзя изменять tar файл).")
+        checker = 0
+        with tarfile.open(self.vfs_path) as tar:
+            if any(member.name == (self.current_directory + '/' + path) for member in tar.getmembers() if member.isdir()):
+                contain = self.current_directory + '/' + path + '/'
+                for member in tar.getmembers():
+                    if contain in member.name:
+                        checker = 1;
+            else:
+                checker = 2;
+        if checker == 1:
+            print("Ошибка: директория не пуста")
+        elif checker == 2:
+            print("Ошибка: директория не существует")
+        else:
+            exclude_dir = self.current_directory + '/' + path
+            output_tar_path = 'temp.tar'
+            with tarfile.open(self.vfs_path) as input_tar:
+                with tarfile.open(output_tar_path, 'w') as output_tar:
+                    for member in input_tar.getmembers():
+                        if not member.name.startswith(exclude_dir):
+                            output_tar.addfile(member, input_tar.extractfile(member))
+            os.remove(self.vfs_path)
+            os.rename(output_tar_path, self.vfs_path)
+            self.log_action(f"rmdir {path}")
 
     def tree(self):
         with tarfile.open(self.vfs_path) as tar:

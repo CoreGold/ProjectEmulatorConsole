@@ -3,10 +3,11 @@ import xml.etree.ElementTree as ET
 import pytest
 import json
 from emulator import ShellEmulator
+from VirtCreator import VFSCreation
 
 @pytest.fixture
 def emulator():
-
+    VFSCreation()
     with open('config.json') as f:
         config = json.load(f)
     return ShellEmulator(config)
@@ -39,21 +40,22 @@ def test_cd_invalid_directory(emulator, capsys):
     captured = capsys.readouterr()
     assert captured.out == "Директория 'test_dir' не найдена.\n"
 
+def test_tree(emulator, capsys):
+    emulator.tree()
+    captured = capsys.readouterr()
+    assert captured.out == "vfs/\n    dir1/\n        file3.txt\n    dir2/\n    file1.txt\n    file2.txt\n"
+
+def test_rmdir(emulator, capsys):
+    emulator.rmdir('dir2')
+    emulator.ls()
+    captured = capsys.readouterr()
+    assert 'dir2' not in captured.out
+
 def test_exit(emulator, capsys):
     with pytest.raises(SystemExit):
         emulator.exit()
     captured = capsys.readouterr()
     assert captured.out == "Выход...\n"
-
-def test_rmdir(emulator, capsys):
-    emulator.rmdir('test')
-    captured = capsys.readouterr()
-    assert captured.out == "Удаление директории 'test' невозможно (Нельзя изменять tar файл).\n"
-
-def test_tree(emulator, capsys):
-    emulator.tree()
-    captured = capsys.readouterr()
-    assert captured.out == "vfs/\n    dir1/\n        file3.txt\n    dir2/\n    file1.txt\n    file2.txt\n"
 
 if __name__ == "__main__":
     pytest.main()
