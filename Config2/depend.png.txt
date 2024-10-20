@@ -1,0 +1,1 @@
+digraph depends{n"curl" -> "ca-certificates"n"ca-certificates" -> "/bin/sh"n"ca-certificates" -> "libc"n"ca-certificates" -> "libcrypto"n"curl" -> "libc"n"curl" -> "libcurl"n"libcurl" -> "ca-certificates"n"libcurl" -> "libbrotlidec"n"libcurl" -> "libc"n"libcurl" -> "libcrypto"n"libcurl" -> "libnghttp2"n"libcurl" -> "libssl"n"libcurl" -> "libz"n"curl" -> "libz"n}
