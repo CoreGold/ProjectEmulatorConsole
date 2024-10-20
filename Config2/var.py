@@ -5,7 +5,7 @@ import graphviz
 
 
 def get_dependencies(package_name):
-    url = f"https://pkgs.alpinelinux.org/package/v3.14/main/x86_64/{package_name}"
+    url = f"https://pkgs.alpinelinux.org/package/edge/main/x86_64/{package_name}"
     response = requests.get(url)
 
     if response.status_code != 200:
@@ -59,10 +59,9 @@ def create_dependency_graph(package_name, output_file, visited=None):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Получить зависимости пакета из Alpine Linux.')
-    parser.add_argument('--package', required=True, help='Название пакета')
-    parser.add_argument('--output-file', required=True,
-                        help='Имя выходного файла для графа зависимостей (без расширения)')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--package', required=True,)
+    parser.add_argument('--output-file', required=True,)
 
     args = parser.parse_args()
 
